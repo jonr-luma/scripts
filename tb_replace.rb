@@ -4,7 +4,11 @@ original_string_or_regex = /Operation::.+\.call\((?!params:)/
 replacement_string = "\\&params: "
 
 replacements = [
-  { search: /Operation::.+\.call\((?!params:)/, replace: "\\&params: " }
+  { search: /Operation::.+\.call\((?!params:)/,             replace: "\\&params: " },
+  { search: /(Operation::.+\.call\(.+)('current_user' =>)/, replace: "\\1current_user:" },
+  { search: /((?<=Trailblazer::Operation))(.+)((step|fail|success|pass)\s:)(?<m>\w+)(.+)def\s\k<m>\W?\((?!_?options)/m, replace: "\\&_options, " },
+  { search: /((?<=module Operation).+)(failure)(?=\s:\w+!?)/m, replace: "\\1fail" },
+  { search: /((?<=module Operation).+)(success)(?=\s:\w+!?)/m, replace: "\\1pass" }
 ]
 
 # Dir.glob will take care of the recursivity for you
