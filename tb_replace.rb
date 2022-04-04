@@ -1,14 +1,10 @@
-# Set the variables for find/replace
-# you can use regular variables here
-original_string_or_regex = /Operation::.+\.call\((?!params:)/
-replacement_string = "\\&params: "
-
 replacements = [
   { search: /Operation::.+\.call\((?!params:)/,             replace: "\\&params: " },
   { search: /(Operation::.+\.call\(.+)('current_user' =>)/, replace: "\\1current_user:" },
   { search: /((?<=Trailblazer::Operation))(.+)((step|fail|success|pass)\s:)(?<m>\w+)(.+)def\s\k<m>\W?\((?!_?options)/m, replace: "\\&_options, " },
   { search: /((?<=module Operation).+)(failure)(?=\s:\w+!?)/m, replace: "\\1fail" },
-  { search: /((?<=module Operation).+)(success)(?=\s:\w+!?)/m, replace: "\\1pass" }
+  { search: /((?<=module Operation).+)(success)(?=\s:\w+!?)/m, replace: "\\1pass" },
+  { search: /(?<all>((?<=module Operation))(.+)((step|fail|success|pass)\s:)(?<m>\w+)(.+)def\s\k<m>\W?(?<paran>\((?>[^)(]|\g<paran>)*))(?<rparan>(?<!\*\*)\))/m, replace: "\\k<all>, **)" }
 ]
 
 # Dir.glob will take care of the recursivity for you
@@ -21,7 +17,7 @@ Dir.glob(rbfiles) do |file_name|
     replacements.each do |replacement|
       s = replacement[:search]
       r = replacement[:replace]
-      if replace = text.gsub!(s, r)
+      while replace = text.gsub!(s, r) do
         file_changes = true
         text = replace
       end
