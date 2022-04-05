@@ -7,7 +7,9 @@ replacements = [
   { search: /((?<=module Operation).+)(success)(?=\s:\w+!?)/m, replace: "\\1pass" },
   { search: /(?<all>((?<=module Operation))(.+)((step|fail|success|pass)\s:)(?<m>\w+)(.+)def\s\k<m>\W?(?<paran>\((?>[^)(]|\g<paran>)*))(?<rparan>(?<!\*\*)\))/m, replace: "\\k<all>, **)" },
   { search: /(?<start>(?<=module\sOperation).+)(?<n>Nested\()/m, replace: "\\k<start>Subprocess(" },
-  { search: /(?<start>Reform::Form.*type:\sTypes::(?!Params))(?<t>\w+)/m, replace: "\\k<start>Params::\\k<t>" }
+  { search: /(?<start>Reform::Form.*type:\sTypes::(?=(Form)))(?<t>\w+::)/m, replace: "\\k<start>" },
+  { search: /(?<start>Reform::Form.*type:\sTypes::(?!Params))(?<t>\w+)/m, replace: "\\k<start>Params::\\k<t>" },
+  { search: /(?<start>Reform::Form.*type:\sTypes::(Params::)?)(?=Int)(?!Integer)(?<t>\w+)/m, replace: "\\k<start>Integer" }
 ]
 
 puts "#======================================================#"
@@ -15,7 +17,7 @@ puts "# The Amazing Trailblazer 2.1 Migration Buddy!         #"
 puts "#======================================================#"
 # Dir.glob will take care of the recursivity for you
 # do not use ~ but rather Dir.home
-rbfiles = File.join("#{Dir.home}/Github/luma_app/app/concepts/**", '*.rb')
+rbfiles = File.join("#{Dir.home}/Github/luma_app/**", '*.rb')
 files_changed_count = 0
 Dir.glob(rbfiles) do |file_name|
   if File.file? file_name
