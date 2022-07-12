@@ -9,7 +9,8 @@ replacements = [
   { search: /(?<start>(?<=module\sOperation).+)(?<n>Nested\()/m, replace: "\\k<start>Subprocess(" },
   { search: /(?<start>Reform::Form.*type:\sTypes::(?=(Form)))(?<t>\w+::)/m, replace: "\\k<start>" },
   { search: /(?<start>Reform::Form.*type:\sTypes::(?!Params))(?<t>\w+)/m, replace: "\\k<start>Params::\\k<t>" },
-  { search: /(?<start>Reform::Form.*type:\sTypes::(Params::)?)(?=Int)(?!Integer)(?<t>\w+)/m, replace: "\\k<start>Integer" }
+  { search: /(?<start>Reform::Form.*type:\sTypes::(Params::)?)(?=Int)(?!Integer)(?<t>\w+)/m, replace: "\\k<start>Integer" },
+  { search: /(?<=ValidateCurrentUser)(\))(?!.*fast_track).*/, replace: '), fast_track: true' }
 ]
 
 puts "#======================================================#"
