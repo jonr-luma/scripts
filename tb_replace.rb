@@ -1,16 +1,20 @@
 replacements = [
-  { search: /(?<call>Operation::.+\.call)(?<paran>(?<lparan>\()(?<inparam>(?!\s*params:)(?=\s*\W?\w+\W?\s*(:|=>))(?>[^)(]|\g<paran>)*)(?<rparan>\)))/, replace: "\\k<call>(params: { \\k<inparam> })" },
-  { search: /Operation::.+\.call\((?!params:)/,             replace: "\\&params: " },
-  { search: /(Operation::.+\.call\(.+)('current_user' =>)/, replace: "\\1current_user:" },
-  { search: /((?<=Trailblazer::Operation))(.+)((step|fail|success|pass)\s:)(?<m>\w+)(.+)def\s\k<m>\W?\((?!_?options)/m, replace: "\\&_options, " },
-  { search: /((?<=module Operation).+)(failure)(?=\s:\w+!?)/m, replace: "\\1fail" },
-  { search: /((?<=module Operation).+)(success)(?=\s:\w+!?)/m, replace: "\\1pass" },
-  { search: /(?<all>((?<=module Operation))(.+)((step|fail|success|pass)\s:)(?<m>\w+)(.+)def\s\k<m>\W?(?<paran>\((?>[^)(]|\g<paran>)*))(?<rparan>(?<!\*\*)\))/m, replace: "\\k<all>, **)" },
-  { search: /(?<start>(?<=module\sOperation).+)(?<n>Nested\()/m, replace: "\\k<start>Subprocess(" },
-  { search: /(?<start>Reform::Form.*type:\sTypes::(?=(Form)))(?<t>\w+::)/m, replace: "\\k<start>" },
-  { search: /(?<start>Reform::Form.*type:\sTypes::(?!Params))(?<t>\w+)/m, replace: "\\k<start>Params::\\k<t>" },
-  { search: /(?<start>Reform::Form.*type:\sTypes::(Params::)?)(?=Int)(?!Integer)(?<t>\w+)/m, replace: "\\k<start>Integer" },
-  { search: /(?<=ValidateCurrentUser)(\))(?!.*fast_track).*/, replace: '), fast_track: true' }
+  # { search: /(?<call>Operation::.+\.call)(?<paran>(?<lparan>\()(?<inparam>(?!\s*params:)(?=\s*\W?\w+\W?\s*(:|=>))(?>[^)(]|\g<paran>)*)(?<rparan>\)))/, replace: "\\k<call>(params: { \\k<inparam> })" },
+  # { search: /Operation::.+\.call\((?!params:)/,             replace: "\\&params: " },
+  # { search: /(Operation::.+\.call\(.+)('current_user' =>)/, replace: "\\1current_user:" },
+  # { search: /((?<=Trailblazer::Operation))(.+)((step|fail|success|pass)\s:)(?<m>\w+)(.+)def\s\k<m>\W?\((?!_?options)/m, replace: "\\&_options, " },
+  # { search: /((?<=module Operation).+)(failure)(?=\s:\w+!?)/m, replace: "\\1fail" },
+  # { search: /((?<=module Operation).+)(success)(?=\s:\w+!?)/m, replace: "\\1pass" },
+  # { search: /(?<all>((?<=module Operation))(.+)((step|fail|success|pass)\s:)(?<m>\w+)(.+)def\s\k<m>\W?(?<paran>\((?>[^)(]|\g<paran>)*))(?<rparan>(?<!\*\*)\))/m, replace: "\\k<all>, **)" },
+  # { search: /(?<start>(?<=module\sOperation).+)(?<n>Nested\()/m, replace: "\\k<start>Subprocess(" },
+  # { search: /(?<start>Reform::Form.*type:\sTypes::(?=(Form)))(?<t>\w+::)/m, replace: "\\k<start>" },
+  # { search: /(?<start>Reform::Form.*type:\sTypes::(?!Params))(?<t>\w+)/m, replace: "\\k<start>Params::\\k<t>" },
+  # { search: /(?<start>Reform::Form.*type:\sTypes::(Params::)?)(?=Int)(?!Integer)(?<t>\w+)/m, replace: "\\k<start>Integer" },
+  # { search: /(?<=ValidateCurrentUser)(\))(?!.*fast_track).*/, replace: '), fast_track: true' }
+  { search: /include Concerns::ErrorHandler/, replace: 'include ErrorHandler' },
+  { search: /Concerns::Representer::RepresentationProperty/, replace: 'Representer::RepresentationProperty' },
+  { search: /Concerns::Representer::ActivityInformation/, replace: 'Representer::ActivityInformation' },
+  { search: /Concerns::Representer::TypeProperty/, replace: 'Representer::TypeProperty' }
 ]
 
 puts "#======================================================#"
